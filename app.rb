@@ -29,13 +29,24 @@ get('/lists/:id') do
 end
 
 post('/lists/:id') do
+
   list_id = params.fetch('list_id').to_i()
   description = params.fetch('description')
-  task = Task.new({:description => description, :list_id => list_id, :done => false})
-  task.save()
+  @tasks = Task.all
   @list = List.find(list_id)
-  redirect back
-end
+  description = params.fetch("description")
+  @task = Task.new({:description => description, :list_id => list_id, :done => false})
+    if @task.save()
+      redirect back
+    else
+      erb(:errors)
+    end
+  end
+
+
+
+
+
 
 get('/lists/:id/edit') do
 
