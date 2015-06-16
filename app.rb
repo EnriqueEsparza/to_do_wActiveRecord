@@ -43,6 +43,21 @@ post('/lists/:id') do
     end
   end
 
+  get('/tasks/:id/edit') do
+
+    @task = Task.find(params.fetch("id").to_i)
+    @tasks = Task.all
+    erb(:edit_task)
+  end
+
+  patch('/tasks/:id/edit') do
+
+    description = params.fetch('description')
+    @task = Task.find(params.fetch('id').to_i)
+    @task.update({:description => description})
+    @tasks = Task.all
+    erb(:edit_task)
+  end
 
 
 

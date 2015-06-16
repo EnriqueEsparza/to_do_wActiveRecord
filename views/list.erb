@@ -17,15 +17,18 @@
 
   <input id='list_id' name='list_id' type='hidden' value='<%= @list.id %>'>
 
-  <label for='description'>Add a Task to this List</label>
+  <label for='description'>Add a Task to <%= @list.name() %>:</label>
 
   <input id = 'description' name='description' type='text'>
   <button type='submit' class='btn btn-info'>Add</button>
 
 
 </form>
-
-
+<br>
+<br>
+<hr>
+<br>
+<br>
 
 
 <div class="form-group">
@@ -34,7 +37,7 @@
   <form action='/lists/ <%= @list.id %>' method='post'>
     <input name='_method' type='hidden' value='patch'>
 
-    <label for='name'> Rename Your List:</label>
+    <label for='name'> Rename Your <%= @list.name() %>:</label>
     <input id='name' name='name' type='text'>
 
     <button type='submit' class='btn btn-info'> Update </button>
@@ -47,7 +50,7 @@
     <input name='_method' type='hidden' value='delete'>
     <input id='id' name='id' type='hidden' value='<%= @list.id %>'>
 
-    <button type="submit" class='btn btn-danger'>Delete List</button>
+    <button type="submit" class='btn btn-danger'>Delete <%= @list.name() %></button>
   </form>
 </div>
 
