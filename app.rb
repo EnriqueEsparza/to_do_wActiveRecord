@@ -43,40 +43,25 @@ post('/lists/:id') do
     end
   end
 
-  get('/tasks/:id/edit') do
-
-    @task = Task.find(params.fetch("id").to_i)
-    @tasks = Task.all
-    erb(:edit_task)
-  end
-
-  patch('/tasks/:id/edit') do
-
-    description = params.fetch('description')
-    @task = Task.find(params.fetch('id').to_i)
-    @task.update({:description => description})
-    @tasks = Task.all
-    erb(:edit_task)
-  end
 
 
 
 
-
-get('/lists/:id/edit') do
+get('/lists/:id') do
 
   @list = List.find(params.fetch("id").to_i)
-  @lists = List.all
+
   erb(:list)
 end
 
 patch('/lists/:id') do
 
+
   name = params.fetch('name')
   @list = List.find(params.fetch('id').to_i)
   @list.update({:name => name})
   @lists = List.all
-  erb(:list)
+  redirect back
 end
 
 
@@ -87,15 +72,29 @@ delete('/') do
   erb(:index)
 end
 
-get('/tasks/:id/edit') do
-  @task = Task.find(params.fetch("id").to_i())
-  erb(:task_edit)
+
+
+get('/tasks/:id') do
+
+  @task = Task.find(params.fetch("id").to_i)
+  x = @task.list_id
+  @list = List.find(x)
+
+  erb(:edit_task)
 end
 
 patch("/tasks/:id") do
-  description = params.fetch("description")
   @task = Task.find(params.fetch("id").to_i())
+  description = params.fetch("description")
   @task.update({:description => description})
-  @tasks = Task.all()
-  erb(:index)
+  redirect back
+end
+
+delete('/tasks/:id') do
+  @task = Task.find(params.fetch("id").to_i)
+  x = @task.list_id.to_i
+  @list = List.find(x)
+  @task.delete
+
+  erb(:list)
 end
